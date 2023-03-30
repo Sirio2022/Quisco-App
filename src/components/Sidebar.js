@@ -9,13 +9,14 @@ export default function Sidebar() {
     <>
       <div>
         <Image
+        
           width={300}
           height={100}
           src="/assets/img/logo.svg"
           alt="Logo"
           style={{
             margin: 'auto',
-            display: 'f',
+            width: '300px',
             height: '100px',
           }}
         />
