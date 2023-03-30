@@ -15,7 +15,7 @@ export default function Sidebar() {
           alt="Logo"
           style={{
             margin: 'auto',
-            display: 'flex',
+            display: 'f',
             height: '100px',
           }}
         />
