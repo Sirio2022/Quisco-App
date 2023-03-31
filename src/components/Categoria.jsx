@@ -8,7 +8,7 @@ export default function Categoria({ categoria }) {
 
   return (
     <div
-      className={`flex items-center gap-2 w-full border p-5 hover:bg-amber-400 ${
+      className={`flex items-center gap-2 w-full border p-4 hover:bg-amber-400 ${
         categoriaActual?.id === id ? 'bg-amber-400' : ''
       } `}
     >

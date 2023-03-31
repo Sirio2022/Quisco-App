@@ -17,9 +17,7 @@ const QuiscoProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (categorias.length > 0) {
-      setCategoriaActual(categorias[0]);
-    }
+    setCategoriaActual(categorias[0]);
   }, [categorias]);
 
   const handleClickCategoria = (id) => {
