@@ -1,11 +1,23 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { formatearDinero } from '@/helpers';
 import useQuisco from '@/hooks/useQuisco';
 
 export default function ModalProducto() {
-  const { producto, handleChangeModal, handleAgregarPedido } = useQuisco();
+  const { producto, handleChangeModal, handleAgregarPedido, pedido } =
+    useQuisco();
   const [cantidad, setCantidad] = useState(1);
+  const [edicion, setEdicion] = useState(false);
+
+  useEffect(() => {
+    // Comprobar si el producto ya existe en el pedido
+    if (pedido.some((prod) => prod.id === producto.id)) {
+      const productoEdicion = pedido.find((prod) => prod.id === producto.id); // El find es para buscar en un array de objetos y retorna el objeto que cumpla con la condición!
+      setEdicion(true);
+      setCantidad(productoEdicion.cantidad);
+    }
+  }, [producto, pedido]);
+
   return (
     <div className="md:flex gap-10">
       <div className="md:w-1/3">
@@ -91,10 +103,10 @@ export default function ModalProducto() {
           type="button"
           className="bg-amber-500 hover:bg-amber-600 w-full mt-5 p-3 text-white uppercase font-bold"
           onClick={() => {
-            handleAgregarPedido({...producto, cantidad});
+            handleAgregarPedido({ ...producto, cantidad });
           }}
         >
-          Agregar al pedido
+          {edicion ? 'Guardar Cambios' : 'Agregar al pedido'}
         </button>
       </div>
     </div>

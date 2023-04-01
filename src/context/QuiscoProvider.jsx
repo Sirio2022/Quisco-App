@@ -1,5 +1,6 @@
-import axios from 'axios';
 import { useState, useEffect, createContext } from 'react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const QuiscoContext = createContext();
 
@@ -37,7 +38,21 @@ const QuiscoProvider = ({ children }) => {
   };
 
   const handleAgregarPedido = ({ categoriaId, imagen, ...producto }) => {
-    setPedido([...pedido, producto]);
+    if (pedido.some((prod) => prod.id === producto.id)) {
+      // El some es para buscar en un array de objetos  y retorna true o false!
+      // Si el producto ya existe en el pedido, vamos a actualizar el pedido
+      const pedidoActualizado = pedido.map(
+        (prod) => (prod.id === producto.id ? producto : prod) // Si el id del producto es igual al id del producto que estamos actualizando, entonces actualizamos el producto, sino, devolvemos el producto que ya estaba en el pedido.
+      );
+      setPedido(pedidoActualizado);
+      toast.success('Producto actualizado', { autoClose: 1000 });
+    } else {
+      // Si el producto no existe en el pedido
+
+      setPedido([...pedido, producto]); // Agregar producto al pedido
+      toast.success('Producto agregado al pedido', { autoClose: 1000 });
+    }
+    setModal(false);
   };
 
   return (
