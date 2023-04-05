@@ -3,7 +3,7 @@ import { formatearDinero } from '@/helpers';
 import useQuisco from '@/hooks/useQuisco';
 
 export default function ResumenProducto({ producto }) {
-  const { handleEditarCantidad } = useQuisco();
+  const { handleEditarCantidad, handleEliminarProducto } = useQuisco();
   return (
     <div className="shadow p-5 mb-3 flex gap-10 items-center">
       <div className="md:w-1/6">
@@ -50,6 +50,7 @@ export default function ResumenProducto({ producto }) {
         <button
           type="button"
           className="bg-red-700 flex px-5 py-2 w-full gap-2 mt-3  text-white rounded-md uppercase font-bold shadow-md hover:bg-red-900"
+          onClick={() => handleEliminarProducto(producto.id)}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
