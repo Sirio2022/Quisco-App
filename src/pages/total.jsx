@@ -51,7 +51,11 @@ export default function Total() {
         <div className="mt-5">
           <input
             type="submit"
-            className="bg-gray-700 w-full md:w-1/3 mt-5 p-2 text-center text-white uppercase rounded hover:bg-gray-900 cursor-pointer"
+            className={
+              pedido.length === 0
+                ? 'bg-gray-700 w-full md:w-1/3 mt-5 p-2 text-center text-white uppercase rounded'
+                : 'bg-gray-700 w-full md:w-1/3 mt-5 p-2 text-center text-white uppercase rounded hover:bg-gray-900 cursor-pointer'
+            }
             value="Confirmar Pedido"
             disabled={comprobarPedido()} // Si el pedido esta vacio, deshabilitamos el boton
           />
