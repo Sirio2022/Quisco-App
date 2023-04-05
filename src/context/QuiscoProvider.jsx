@@ -37,7 +37,7 @@ const QuiscoProvider = ({ children }) => {
     setModal(!modal);
   };
 
-  const handleAgregarPedido = ({ categoriaId, imagen, ...producto }) => {
+  const handleAgregarPedido = ({ categoriaId, ...producto }) => {
     if (pedido.some((prod) => prod.id === producto.id)) {
       // El some es para buscar en un array de objetos  y retorna true o false!
       // Si el producto ya existe en el pedido, vamos a actualizar el pedido
@@ -55,6 +55,12 @@ const QuiscoProvider = ({ children }) => {
     setModal(false);
   };
 
+  const handleEditarCantidad = (id) => {
+    const procuctoActualizado = pedido.filter((prod) => prod.id === id);
+    setProducto(procuctoActualizado[0]);
+    setModal(!modal);
+  };
+
   return (
     <QuiscoContext.Provider
       value={{
@@ -67,6 +73,7 @@ const QuiscoProvider = ({ children }) => {
         handleChangeModal,
         pedido,
         handleAgregarPedido,
+        handleEditarCantidad,
       }}
     >
       {children}
