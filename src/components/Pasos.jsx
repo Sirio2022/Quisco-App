@@ -20,13 +20,22 @@ const pasos = [
 ];
 
 export default function Pasos() {
-  const { handleChangePaso, paso } = useQuisco();
+  const { handleChangePaso } = useQuisco();
 
   const router = useRouter();
 
   const calcularProgreso = () => {
-    const porcentaje = ((paso / 3) * 100).toFixed(0);
-    return porcentaje;
+    let valor;
+    if (router.pathname === '/') {
+      valor = 25;
+    }
+    if (router.pathname === '/resumen') {
+      valor = 50;
+    }
+    if (router.pathname === '/total') {
+      valor = 100;
+    }
+    return valor;
   };
   return (
     <>
