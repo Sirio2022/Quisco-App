@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import useQuisco from '@/hooks/useQuisco';
 
 const pasos = [
   {
@@ -20,8 +19,6 @@ const pasos = [
 ];
 
 export default function Pasos() {
-  const { handleChangePaso } = useQuisco();
-
   const router = useRouter();
 
   const calcularProgreso = () => {
@@ -45,7 +42,6 @@ export default function Pasos() {
             className="text-2xl font-bold"
             key={paso.paso}
             onClick={() => {
-              handleChangePaso(paso.paso);
               router.push(paso.url);
             }}
           >
