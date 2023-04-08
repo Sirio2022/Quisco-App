@@ -11,6 +11,8 @@ const QuiscoProvider = ({ children }) => {
   const [producto, setProducto] = useState({});
   const [modal, setModal] = useState(false);
   const [pedido, setPedido] = useState([]);
+  const [nombre, setNombre] = useState('');
+  const [total, setTotal] = useState(0);
 
   const router = useRouter();
 
@@ -26,6 +28,14 @@ const QuiscoProvider = ({ children }) => {
   useEffect(() => {
     setCategoriaActual(categorias[0]);
   }, [categorias]);
+
+  useEffect(() => {
+    const nuevoTotal = pedido.reduce(
+      (acc, prod) => acc + prod.cantidad * prod.precio,
+      0
+    );
+    setTotal(nuevoTotal);
+  }, [pedido]);
 
   const handleClickCategoria = (id) => {
     const categoria = categorias.filter((cat) => cat.id === id);
@@ -70,6 +80,32 @@ const QuiscoProvider = ({ children }) => {
     setPedido(pedidoActualizado);
   };
 
+  const colocarOrden = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post('/api/ordenes', {
+        pedido,
+        nombre,
+        total,
+        fecha: Date.now().toString(),
+      });
+
+      //Reseteamos la App
+      setCategoriaActual(categorias[0]);
+      setPedido([]);
+      setNombre('');
+      setTotal(0);
+
+      toast.success('Orden colocada', { autoClose: 1000 });
+
+      setTimeout(() => {
+        router.push('/');
+      }, 1000);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <QuiscoContext.Provider
       value={{
@@ -84,6 +120,10 @@ const QuiscoProvider = ({ children }) => {
         handleAgregarPedido,
         handleEditarCantidad,
         handleEliminarProducto,
+        nombre,
+        setNombre,
+        total,
+        colocarOrden,
       }}
     >
       {children}

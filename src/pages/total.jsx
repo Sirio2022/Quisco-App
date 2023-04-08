@@ -1,23 +1,19 @@
 import Layout from '@/layout/Layout';
 import useQuisco from '@/hooks/useQuisco';
 import { useEffect, useCallback } from 'react';
+import { formatearDinero } from '@/helpers';
 
 export default function Total() {
-  const { pedido } = useQuisco();
-  console.log(pedido);
+  const { pedido, total, setNombre, nombre, colocarOrden } = useQuisco();
 
   const comprobarPedido = useCallback(() => {
-    return pedido.length === 0;
-  }, [pedido]);
+    return pedido.length === 0 || nombre === '' || nombre.length < 5;
+  }, [pedido, nombre]);
 
   useEffect(() => {
     comprobarPedido();
   }, [pedido, comprobarPedido]);
 
-  function colocarOrden(e) {
-    e.preventDefault();
-    console.log('colocando orden');
-  }
   return (
     <Layout pagina="Total y confirmar pedido">
       <h1 className="text-4xl font-black ">Total y confirmar pedido</h1>
@@ -38,24 +34,26 @@ export default function Total() {
             id="nombre"
             placeholder="Tu nombre"
             className="w-full bg-gray-200  md:w-1/3 border border-gray-300 rounded-lg py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            value={nombre}
+            onChange={(e) => setNombre(e.target.value)}
           />
         </div>
 
         <div className="mt-10">
           <p className="text-2xl">
             <span className="font-bold">Total a pagar: </span>
-            <span className="font-bold text-2xl">$1000</span>
+            <span className="font-bold text-2xl">{formatearDinero(total)}</span>
           </p>
         </div>
 
         <div className="mt-5">
           <input
             type="submit"
-            className={
-              pedido.length === 0
-                ? 'bg-gray-700 w-full md:w-1/3 mt-5 p-2 text-center text-white uppercase rounded'
-                : 'bg-gray-700 w-full md:w-1/3 mt-5 p-2 text-center text-white uppercase rounded hover:bg-gray-900 cursor-pointer'
-            }
+            className={`${
+              comprobarPedido()
+                ? 'bg-indigo-100'
+                : 'bg-indigo-600 cursor-pointer hover:bg-indigo-700'
+            } w-full lg:w-auto px-5 py-2 rounded uppercase font-bold text-white text-center `}
             value="Confirmar Pedido"
             disabled={comprobarPedido()} // Si el pedido esta vacio, deshabilitamos el boton
           />
