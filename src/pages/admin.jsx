@@ -6,7 +6,9 @@ import Orden from '@/components/Orden';
 export default function admin() {
   const fetcher = () => axios.get('/api/ordenes').then((res) => res.data);
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { data, error, isLoading } = useSWR('/api/ordenes', fetcher);
+  const { data, error, isLoading } = useSWR('/api/ordenes', fetcher, {
+    refreshInterval: 500,
+  });
 
   return (
     <AdminLayout pagina={'Admin'}>
