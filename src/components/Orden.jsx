@@ -9,9 +9,9 @@ export default function Orden({ orden }) {
   const completarOrden = async () => {
     try {
       await axios.post(`/api/ordenes/${id}`);
-      toast.success('Orden completada', { autoClose: 1000 });
+      toast.success('Orden completada', { autoClose: 300 });
     } catch (error) {
-      toast.error('Hubo un error', { autoClose: 1000 });
+      toast.error('Hubo un error', { autoClose: 300 });
     }
   };
 

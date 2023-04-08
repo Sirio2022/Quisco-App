@@ -7,7 +7,7 @@ export default function admin() {
   const fetcher = () => axios.get('/api/ordenes').then((res) => res.data);
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { data, error, isLoading } = useSWR('/api/ordenes', fetcher, {
-    refreshInterval: 500,
+    refreshInterval: 300,
   });
 
   return (
